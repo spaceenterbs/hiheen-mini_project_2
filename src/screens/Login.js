@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 import React from "react";
-import FacebookLogin from "react-facebook-login";
 
 const Container = styled.div`
   display: flex;
@@ -109,7 +108,7 @@ const Separator = styled.div`
   }
 `;
 
-const FacebookLogin = styled.div`
+const FacebookLoginContainer = styled.div`
   color: #385285;
   span {
     margin-left: 10px;
@@ -141,16 +140,16 @@ function Login() {
             <div></div>
           </Separator>
 
-          <FacebookLogin>
+          <FacebookLoginContainer>
             <FontAwesomeIcon icon={faFacebookSquare} />
             <span>Facebook으로 로그인</span>
-          </FacebookLogin>
+          </FacebookLoginContainer>
         </TopBox>
 
         <BottomBox>
           <span>계정이 없으신가요?</span>
           <Link to="/signup">가입하기</Link>
-          // 버튼을 클릭하면 사이트로 가게끔. Link를 import 안 해주면 오류 난다.
+          {/* 버튼을 클릭하면 사이트로 가게끔. Link를 import 안 해주면 오류 난다.*/}
         </BottomBox>
       </Wrapper>
     </Container>
