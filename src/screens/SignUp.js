@@ -9,13 +9,15 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh;import { useForm } from "react-hook-form";
+
 `;
 
 const Wrapper = styled.div`
@@ -26,7 +28,7 @@ const Wrapper = styled.div`
 const WhiteBox = styled.div`
   background-color: white;
   border: 1px solid rgb(219, 219, 219);
-  boder: 1px solid ${(props) => props.theme.borderColor};
+  border: 1px solid ${(props) => props.theme.borderColor};
   width: 100%;
 `;
 
@@ -41,7 +43,7 @@ const TopBox = styled(WhiteBox)`
   form {
     display: flex;
     flex-direction: column;
-    margin-top: 35px;
+    margin-top: 15px;
     width: 100%;
     justify-items: center;
     align-items: center;
@@ -82,11 +84,12 @@ const Button = styled.button`
   text-align: center;
   padding: 8px 0px;
   font-weight: 600;
+  opacity: ${(props) => (props.disabled ? "0.3" : "1")};
 `;
 
 const Separator = styled.div`
   width: 100%;
-  margin: 20px 0px 30px 0px;
+  margin: 20px 0px 0px 0px;
   text-transform: uppercase;
 
   display: flex;
@@ -116,6 +119,22 @@ const FacebookLogin = styled.div`
 `;
 
 export default function SignUp() {
+  const {
+    register,
+    handleSubmit,
+    formState,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
+
+  const onSubmitValid = (data) => {
+    console.log(data);
+    // 로그인 성공시 수행할 작업을 여기에 작성하면 됩니다.
+  };
+
+  const onSubmitInvalid = (errors) => {
+    console.log(errors);
+    // 로그인 실패시 수행할 작업을 여기에 작성하면 됩니다.
+  };
   return (
     <Container>
       <Helmet>
@@ -137,17 +156,53 @@ export default function SignUp() {
             <span>OR</span>
             <div></div>
           </Separator>
+          <form onSubmit={handleSubmit(onSubmitValid, onSubmitInvalid)}>
+            <Input
+              type="text"
+              placeholder="이름"
+              {...register("name", { required: true, minLength: 3 })}
+            />
+            {errors.name && errors.name.type === "minLength" && (
+              <p style={{ color: "red" }}>
+                이름은 최소 3글자 이상 입력 해주셔야 합니다.
+              </p>
+            )}
+            <Input
+              type="text"
+              placeholder="휴대폰 번호"
+              {...register("phone", { required: true })}
+            />
+            {errors.name && errors.name.type === "required" && (
+              <p style={{ color: "red" }}>
+                휴대폰 번호는 최소 3글자 이상 입력 해주셔야 합니다.
+              </p>
+            )}
+            <Input
+              type="text"
+              placeholder="유저네임"
+              {...register("username", { required: true })}
+            />{" "}
+            {errors.name && errors.name.type === "required" && (
+              <p style={{ color: "red" }}>
+                유저네임은 최소 2글자 이상 입력 해주셔야 합니다.
+              </p>
+            )}
+            <Input
+              type="password"
+              placeholder="비밀번호"
+              {...register("password", { required: true, minLength: 4 })}
+            />
+            {errors.name && errors.name.type === "minLength" && (
+              <p style={{ color: "red" }}>
+                휴대폰 번호는 최소 3글자 이상 입력 해주셔야 합니다.
+              </p>
+            )}
+            <Button type="submit">가입하기</Button>
+          </form>
         </TopBox>
-        <form>
-          <Input type="text" name="username" placeholder="유저네임" />
-          <Input type="password" name="password" placeholder="비밀번호" />
-          <Button type="submit" value="로그인 하기" />
-        </form>
-        {/* container, wrapper */}
         <BottomBox>
           <span>계정이 있으신가요?</span>
           <Link to="/">로그인하기</Link>
-          // 버튼을 클릭하면 사이트로 가게끔, Link를 import 안 해주면 오류 난다.
         </BottomBox>
       </Wrapper>
     </Container>

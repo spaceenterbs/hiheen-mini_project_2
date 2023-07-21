@@ -1,16 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import React, { useState } from "react";
 import {
   faInstagram,
   faFacebookSquare,
 } from "@fortawesome/free-brands-svg-icons";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
 import { Helmet } from "react-helmet-async";
-
-import React from "react";
+import { useForm } from "react-hook-form";
 
 const Container = styled.div`
   display: flex;
@@ -117,6 +116,23 @@ const FacebookLoginContainer = styled.div`
 `;
 
 function Login() {
+  // userState(): 컴포넌트에서 바뀌는 변수 도는 값을 관리할 수 있게 해준다.
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onChange = (event) => {
+    const { name, value } = event.currentTarget;
+    console.log(name, value);
+
+    if (name === "username") {
+      setUsername(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
   return (
     <Container>
       <Helmet>
@@ -128,9 +144,21 @@ function Login() {
             <FontAwesomeIcon icon={faInstagram} size="3x" />
           </div>
 
-          <form>
-            <Input type="text" name="username" placeholder="유저네임" />
-            <Input type="password" name="password" placeholder="비밀번호" />
+          <form onSubmit={onSubmit}>
+            <Input
+              type="text"
+              name="username"
+              placeholder="유저네임"
+              onChange={onChange}
+              required
+            />
+            <Input
+              type="password"
+              name="password"
+              placeholder="비밀번호"
+              onChange={onChange}
+              required
+            />
             <Button type="submit" value="로그인 하기" />
           </form>
 
