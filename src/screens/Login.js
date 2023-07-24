@@ -1,15 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
 import {
   faInstagram,
   faFacebookSquare,
 } from "@fortawesome/free-brands-svg-icons";
-import styled from "styled-components";
-
+import { styled } from "styled-components";
 import { Link } from "react-router-dom";
-
 import { Helmet } from "react-helmet-async";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -107,7 +104,7 @@ const Separator = styled.div`
   }
 `;
 
-const FacebookLoginContainer = styled.div`
+const FacebookLogin = styled.div`
   color: #385285;
   span {
     margin-left: 10px;
@@ -116,8 +113,8 @@ const FacebookLoginContainer = styled.div`
 `;
 
 function Login() {
-  // userState(): 컴포넌트에서 바뀌는 변수 도는 값을 관리할 수 있게 해준다.
-  const [username, setUsername] = useState("");
+  // useState(): 컴포넌트에서 바뀌는 변수 또는 값을 관리해주는 함수
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   const onChange = (event) => {
@@ -125,14 +122,22 @@ function Login() {
     console.log(name, value);
 
     if (name === "username") {
-      setUsername(value);
+      setUserName(value);
     } else if (name === "password") {
       setPassword(value);
     }
   };
+
+  // 패스워드가 4개 이상의 문자를 필요로 한다.
   const onSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // 새로고침 방지
+    console.log("onSubmit");
+
+    if (password.length < 5) {
+      alert("비밀번호가 짧습니다.");
+    }
   };
+
   return (
     <Container>
       <Helmet>
@@ -159,7 +164,7 @@ function Login() {
               onChange={onChange}
               required
             />
-            <Button type="submit" value="로그인 하기" />
+            <Button type="submit" value="가입" />
           </form>
 
           <Separator>
@@ -168,16 +173,15 @@ function Login() {
             <div></div>
           </Separator>
 
-          <FacebookLoginContainer>
+          <FacebookLogin>
             <FontAwesomeIcon icon={faFacebookSquare} />
             <span>Facebook으로 로그인</span>
-          </FacebookLoginContainer>
+          </FacebookLogin>
         </TopBox>
 
         <BottomBox>
-          <span>계정이 없으신가요?</span>
+          <span>계정이 있으신가요?</span>
           <Link to="/signup">가입하기</Link>
-          {/* 버튼을 클릭하면 사이트로 가게끔. Link를 import 안 해주면 오류 난다.*/}
         </BottomBox>
       </Wrapper>
     </Container>

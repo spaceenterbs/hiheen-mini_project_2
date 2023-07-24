@@ -1,18 +1,18 @@
-/*
-홈스크린, 헤더 
-
-
-*/
-
-import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { styled } from "styled-components";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import {
+  faHome,
+  faPaperPlane,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 18px 0;
   border-bottom: 1px solid black;
 `;
 
@@ -21,27 +21,18 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px 20px;
-  margin: 10px 10px;
   max-width: 630px;
 `;
 
-const Column = styled.div`
+const Icon = styled.span`
+  margin-left: 5px;
+`;
+
+const Column = styled.div``;
+
+const IconsContainer = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Icon = styled(FontAwesomeIcon)`
-  margin: 0px 3px;
-`;
-
-const Button = styled.button`
-  padding: 8px 16px;
-  background-color: #0095f6;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
 `;
 
 function Header() {
@@ -49,13 +40,21 @@ function Header() {
     <HeaderContainer>
       <Wrapper>
         <Column>
-          <Icon icon={faInstagram} />
+          <FontAwesomeIcon icon={faInstagram} size="2x" />
         </Column>
+
         <Column>
-          <Icon icon={faInstagram} />
-          <Icon icon={faInstagram} />
-          <Icon icon={faInstagram} />
-          <Button>login</Button>
+          <IconsContainer>
+            <Icon>
+              <FontAwesomeIcon icon={faHome} size="2x" />
+            </Icon>
+            <Icon>
+              <FontAwesomeIcon icon={faPaperPlane} size="2x" />
+            </Icon>
+            <Icon>
+              <FontAwesomeIcon icon={faUser} size="2x" />
+            </Icon>
+          </IconsContainer>
         </Column>
       </Wrapper>
     </HeaderContainer>
